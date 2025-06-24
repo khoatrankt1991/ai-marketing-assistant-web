@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gợi Ý Chiến Lược - AI Marketing Assistant</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .logo i {
+            font-size: 24px;
+            color: #667eea;
+            margin-right: 12px;
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .nav-link i {
+            margin-right: 12px;
+            width: 20px;
+            font-size: 16px;
+        }
+
+        .hamburger-menu {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-menu:hover {
+            transform: scale(1.05);
+        }
+
+        .hamburger-menu i {
+            font-size: 20px;
+            color: #667eea;
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .mobile-overlay.active {
+            display: block;
+        }
+
+        .sidebar.mobile-open {
+            transform: translateX(0);
+        }
+
+        .bottom-menu {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 0;
+            z-index: 1000;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+        }
+
+        .bottom-menu-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .bottom-menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            min-width: 60px;
+        }
+
+        .bottom-menu-item.active {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .bottom-menu-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .bottom-menu-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .page-title h2 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 12px 20px;
+            border-radius: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .card h3 {
+            color: #333;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card h3 i {
+            margin-right: 12px;
+            color: #667eea;
+        }
+
+        .ai-suggestions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .suggestion-generator {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .generate-btn i {
+            margin-right: 8px;
+        }
+
+        .suggestions-display {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .suggestion-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .suggestion-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .suggestion-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .suggestion-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .strategy-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .category-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .category-count {
+            color: #667eea;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .ai-suggestions {
+                grid-template-columns: 1fr;
+            }
+            
+            .strategy-categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 280px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 1000;
+                overflow-y: auto;
+            }
+            
+            .main-content {
+                padding: 90px 15px 80px;
+                width: 100%;
+            }
+            
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+                margin-top: 0;
+            }
+
+            .bottom-menu {
+                display: block;
+            }
+
+            .strategy-categories {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="hamburger-menu" id="hamburgerBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+
+        <nav class="sidebar" id="sidebar">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1>AI Marketing</h1>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="create-content.html" class="nav-link">
+                        <i class="fas fa-edit"></i>
+                        Tạo nội dung
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="schedule.html" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        Lên lịch đăng
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="chatbot.html" class="nav-link">
+                        <i class="fas fa-comments"></i>
+                        AI Chatbot
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="social-media.html" class="nav-link">
+                        <i class="fas fa-share-alt"></i>
+                        Mạng xã hội
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="analytics.html" class="nav-link">
+                        <i class="fas fa-chart-line"></i>
+                        Báo cáo
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="strategy.html" class="nav-link active">
+                        <i class="fas fa-lightbulb"></i>
+                        Gợi ý chiến lược
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="settings.html" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        Cài đặt
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h2>Gợi Ý Chiến Lược</h2>
+                    <p>AI phân tích và đưa ra chiến lược marketing phù hợp</p>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar">A</div>
+                    <div>
+                        <div style="font-weight: 600; color: #333;">Admin User</div>
+                        <div style="font-size: 12px; color: #666;">Gói Nâng cao</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Strategy Generator -->
+            <div class="ai-suggestions">
+                <div class="suggestion-generator">
+                    <h3><i class="fas fa-magic"></i>Tạo chiến lược với AI</h3>
+                    
+                    <div class="input-group">
+                        <label>Ngành nghề của bạn</label>
+                        <select id="industry">
+                            <option>Thời trang & làm đẹp</option>
+                            <option>Ẩm thực & nhà hàng</option>
+                            <option>Công nghệ & phần mềm</option>
+                            <option>Giáo dục & đào tạo</option>
+                            <option>Sức khỏe & y tế</option>
+                            <option>Bất động sản</option>
+                            <option>Du lịch & khách sạn</option>
+                            <option>Bán lẻ & thương mại</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Mục tiêu chính</label>
+                        <select id="goal">
+                            <option>Tăng nhận diện thương hiệu</option>
+                            <option>Tăng doanh số bán hàng</option>
+                            <option>Thu hút khách hàng mới</option>
+                            <option>Giữ chân khách hàng cũ</option>
+                            <option>Mở rộng thị trường</option>
+                            <option>Giới thiệu sản phẩm mới</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Ngân sách marketing (tháng)</label>
+                        <select id="budget">
+                            <option>Dưới 5 triệu VNĐ</option>
+                            <option>5-10 triệu VNĐ</option>
+                            <option>10-20 triệu VNĐ</option>
+                            <option>20-50 triệu VNĐ</option>
+                            <option>Trên 50 triệu VNĐ</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Đối tượng khách hàng</label>
+                        <textarea id="audience" rows="3" placeholder="VD: Phụ nữ 25-35 tuổi, thu nhập trung bình khá, quan tâm đến làm đẹp và thời trang..."></textarea>
+                    </div>
+                    
+                    <button class="generate-btn" id="generateStrategy">
+                        <i class="fas fa-lightbulb"></i>
+                        Tạo chiến lược AI
+                    </button>
+                </div>
+
+                <div class="suggestions-display">
+                    <h3><i class="fas fa-star"></i>Gợi ý chiến lược</h3>
+                    
+                    <div id="strategySuggestions">
+                        <div class="suggestion-item">
+                            <div class="suggestion-title">📱 Chiến lược Social Media</div>
+                            <div class="suggestion-description">
+                                Tập trung vào Instagram và TikTok với nội dung visual hấp dẫn. Đăng bài đều đặn vào khung giờ vàng 19:00-21:00.
+                            </div>
+                            <div class="suggestion-tags">
+                                <span class="tag">Instagram</span>
+                                <span class="tag">TikTok</span>
+                                <span class="tag">Visual Content</span>
+                            </div>
+                        </div>
+                        
+                        <div class="suggestion-item">
+                            <div class="suggestion-title">🎯 Content Marketing</div>
+                            <div class="suggestion-description">
+                                Tạo series video tutorial và tips hữu ích. Chia sẻ câu chuyện behind-the-scenes để tăng tính gần gũi.
+                            </div>
+                            <div class="suggestion-tags">
+                                <span class="tag">Video</span>
+                                <span class="tag">Tutorial</span>
+                                <span class="tag">Storytelling</span>
+                            </div>
+                        </div>
+                        
+                        <div class="suggestion-item">
+                            <div class="suggestion-title">💬 Engagement Strategy</div>
+                            <div class="suggestion-description">
+                                Tổ chức contest và giveaway để tăng tương tác. Phản hồi comments trong vòng 2 giờ để xây dựng cộng đồng.
+                            </div>
+                            <div class="suggestion-tags">
+                                <span class="tag">Contest</span>
+                                <span class="tag">Community</span>
+                                <span class="tag">Engagement</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy Categories -->
+            <div class="strategy-categories">
+                <div class="category-card" onclick="showCategoryDetails('content')">
+                    <div class="category-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="category-title">Content Marketing</div>
+                    <div class="category-description">Chiến lược tạo và phân phối nội dung để thu hút và giữ chân khách hàng</div>
+                    <div class="category-count">12 chiến lược có sẵn</div>
+                </div>
+
+                <div class="category-card" onclick="showCategoryDetails('social')">
+                    <div class="category-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <div class="category-title">Social Media</div>
+                    <div class="category-description">Tối ưu hóa hiện diện trên các nền tảng mạng xã hội</div>
+                    <div class="category-count">8 chiến lược có sẵn</div>
+                </div>
+
+                <div class="category-card" onclick="showCategoryDetails('email')">
+                    <div class="category-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="category-title">Email Marketing</div>
+                    <div class="category-description">Xây dựng và nurture mối quan hệ qua email</div>
+                    <div class="category-count">6 chiến lược có sẵn</div>
+                </div>
+
+                <div class="category-card" onclick="showCategoryDetails('seo')">
+                    <div class="category-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="category-title">SEO & Search</div>
+                    <div class="category-description">Tối ưu hóa để tăng khả năng tìm thấy trên search engines</div>
+                    <div class="category-count">10 chiến lược có sẵn</div>
+                </div>
+
+                <div class="category-card" onclick="showCategoryDetails('influencer')">
+                    <div class="category-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="category-title">Influencer Marketing</div>
+                    <div class="category-description">Hợp tác với influencers để mở rộng reach</div>
+                    <div class="category-count">5 chiến lược có sẵn</div>
+                </div>
+
+                <div class="category-card" onclick="showCategoryDetails('automation')">
+                    <div class="category-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="category-title">Marketing Automation</div>
+                    <div class="category-description">Tự động hóa quy trình marketing để tiết kiệm thời gian</div>
+                    <div class="category-count">7 chiến lược có sẵn</div>
+                </div>
+            </div>
+
+            <!-- Quick Tips -->
+            <div class="card">
+                <h3><i class="fas fa-chart-line"></i>Tips marketing nhanh</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 20px; border-left: 4px solid #667eea;">
+                        <div style="color: #667eea; font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Content</div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Đăng bài vào giờ vàng</div>
+                        <div style="color: #666; font-size: 14px; line-height: 1.5;">
+                            Thời gian tối ưu cho Facebook là 19:00-21:00, Instagram là 20:00-22:00.
+                        </div>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 20px; border-left: 4px solid #28a745;">
+                        <div style="color: #28a745; font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Engagement</div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Phản hồi nhanh chóng</div>
+                        <div style="color: #666; font-size: 14px; line-height: 1.5;">
+                            Trả lời comments và messages trong vòng 2 giờ để tăng engagement rate.
+                        </div>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 20px; border-left: 4px solid #ffc107;">
+                        <div style="color: #ffc107; font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Visual</div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Sử dụng video ngắn</div>
+                        <div style="color: #666; font-size: 14px; line-height: 1.5;">
+                            Video 15-30 giây có engagement cao nhất. Thêm subtitles vì 85% người xem không bật âm thanh.
+                        </div>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 20px; border-left: 4px solid #dc3545;">
+                        <div style="color: #dc3545; font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Hashtag</div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Mix hashtag hiệu quả</div>
+                        <div style="color: #666; font-size: 14px; line-height: 1.5;">
+                            Sử dụng 70% hashtag có tương tác trung bình, 20% hashtag hot, 10% hashtag niche.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-menu">
+            <div class="bottom-menu-items">
+                <a href="index.html" class="bottom-menu-item">
+                    <i class="fas fa-home"></i>
+                    <span>Trang chủ</span>
+                </a>
+                <a href="create-content.html" class="bottom-menu-item">
+                    <i class="fas fa-edit"></i>
+                    <span>Tạo bài</span>
+                </a>
+                <a href="schedule.html" class="bottom-menu-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Lịch đăng</span>
+                </a>
+                <a href="chatbot.html" class="bottom-menu-item">
+                    <i class="fas fa-comments"></i>
+                    <span>Chatbot</span>
+                </a>
+                <a href="analytics.html" class="bottom-menu-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Báo cáo</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        function toggleMobileMenu() {
+            sidebar.classList.toggle('mobile-open');
+            mobileOverlay.classList.toggle('active');
+            
+            const icon = hamburgerBtn.querySelector('i');
+            if (sidebar.classList.contains('mobile-open')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        }
+
+        hamburgerBtn.addEventListener('click', toggleMobileMenu);
+        mobileOverlay.addEventListener('click', toggleMobileMenu);
+
+        // Strategy generator
+        document.getElementById('generateStrategy').addEventListener('click', function() {
+            const btn = this;
+            const industry = document.getElementById('industry').value;
+            const goal = document.getElementById('goal').value;
+            const budget = document.getElementById('budget').value;
+            const audience = document.getElementById('audience').value;
+            
+            // Show loading
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang phân tích...';
+            btn.disabled = true;
+            
+            // Simulate AI generation
+            setTimeout(() => {
+                generateCustomStrategy(industry, goal, budget, audience);
+                btn.innerHTML = '<i class="fas fa-lightbulb"></i> Tạo chiến lược AI';
+                btn.disabled = false;
+                showNotification('Đã tạo chiến lược mới!', 'success');
+            }, 3000);
+        });
+
+        function generateCustomStrategy(industry, goal, budget, audience) {
+            const strategySuggestions = document.getElementById('strategySuggestions');
+            
+            const strategies = {
+                'Thời trang & làm đẹp': [
+                    {
+                        title: '🌟 Visual Storytelling',
+                        description: 'Tập trung vào Instagram Stories và Reels với nội dung before/after, tutorial makeup, outfit styling.',
+                        tags: ['Instagram', 'Visual', 'Tutorial']
+                    },
+                    {
+                        title: '👑 Influencer Collaboration',
+                        description: 'Hợp tác với micro-influencers trong lĩnh vực làm đẹp để tăng credibility và reach.',
+                        tags: ['Influencer', 'Partnership', 'Trust']
+                    },
+                    {
+                        title: '💝 User Generated Content',
+                        description: 'Khuyến khích khách hàng chia sẻ ảnh sử dụng sản phẩm với hashtag riêng.',
+                        tags: ['UGC', 'Community', 'Social Proof']
+                    }
+                ],
+                'Ẩm thực & nhà hàng': [
+                    {
+                        title: '🍔 Food Photography',
+                        description: 'Đầu tư vào ảnh món ăn chất lượng cao, quay video quá trình chế biến.',
+                        tags: ['Photography', 'Video', 'Process']
+                    },
+                    {
+                        title: '📱 Delivery Marketing',
+                        description: 'Tối ưu cho các app giao hàng, tạo combo hấp dẫn, khuyến mãi giờ vàng.',
+                        tags: ['Delivery', 'Promotion', 'Timing']
+                    }
+                ],
+                default: [
+                    {
+                        title: '🎯 Targeted Content',
+                        description: `Tạo nội dung phù hợp với ${audience || 'đối tượng khách hàng'} và mục tiêu ${goal.toLowerCase()}.`,
+                        tags: ['Targeting', 'Personalization', 'Goals']
+                    },
+                    {
+                        title: '📊 Data-Driven Approach',
+                        description: 'Sử dụng analytics để theo dõi hiệu suất và điều chỉnh chiến lược.',
+                        tags: ['Analytics', 'Optimization', 'ROI']
+                    }
+                ]
+            };
+            
+            const selectedStrategies = strategies[industry] || strategies.default;
+            
+            strategySuggestions.innerHTML = selectedStrategies.map(strategy => `
+                <div class="suggestion-item">
+                    <div class="suggestion-title">${strategy.title}</div>
+                    <div class="suggestion-description">${strategy.description}</div>
+                    <div class="suggestion-tags">
+                        ${strategy.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Category details
+        function showCategoryDetails(category) {
+            const categories = {
+                content: 'Content Marketing: Tạo blog posts, videos, infographics, podcasts để thu hút và giáo dục khách hàng.',
+                social: 'Social Media: Xây dựng community, tăng engagement, chạy ads hiệu quả trên các nền tảng.',
+                email: 'Email Marketing: Newsletter, automation sequences, personalization để nurture leads.',
+                seo: 'SEO & Search: Tối ưu website, content SEO, local SEO để tăng organic traffic.',
+                influencer: 'Influencer Marketing: Tìm và hợp tác với influencers phù hợp với thương hiệu.',
+                automation: 'Marketing Automation: Tự động hóa lead nurturing, email sequences, social posting.'
+            };
+            
+            showNotification(categories[category] || 'Tính năng đang phát triển!', 'success');
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : '#dc3545'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-weight: 500;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                max-width: 300px;
+                word-wrap: break-word;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Remove after 4 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 4000);
+        }
+
+        // Close mobile menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('mobile-open');
+                mobileOverlay.classList.remove('active');
+                hamburgerBtn.querySelector('i').className = 'fas fa-bars';
+            }
+        });
+
+        // Animate elements on load
+        window.addEventListener('load', function() {
+            // Animate category cards
+            const cards = document.querySelectorAll('.category-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
+                
