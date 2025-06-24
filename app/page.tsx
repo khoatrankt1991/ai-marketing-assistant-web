@@ -183,7 +183,7 @@ export default function Home() {
                   <i className="fas fa-share"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">Đăng bài "Khuyến mãi cuối tuần" lên Facebook</div>
+                  <div className="activity-title">Đăng bài &ldquo;Khuyến mãi cuối tuần&rdquo; lên Facebook</div>
                   <div className="activity-time">2 giờ trước</div>
                 </div>
               </li>
@@ -201,7 +201,7 @@ export default function Home() {
                   <i className="fas fa-edit"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">Tạo bài viết "Tips chăm sóc da mùa khô"</div>
+                  <div className="activity-title">Tạo bài viết &ldquo;Tips chăm sóc da mùa khô&rdquo;</div>
                   <div className="activity-time">1 ngày trước</div>
                 </div>
               </li>

@@ -233,7 +233,7 @@ export default function Chatbot() {
                   <i className="fas fa-edit"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">"Tạo bài viết về sản phẩm mới"</div>
+                  <div className="activity-title">&ldquo;Tạo bài viết về sản phẩm mới&rdquo;</div>
                   <div className="activity-time">Gợi ý nội dung</div>
                 </div>
               </li>
@@ -242,7 +242,7 @@ export default function Chatbot() {
                   <i className="fas fa-chart-bar"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">"Phân tích hiệu quả marketing"</div>
+                  <div className="activity-title">&ldquo;Phân tích hiệu quả marketing&rdquo;</div>
                   <div className="activity-time">Báo cáo chi tiết</div>
                 </div>
               </li>
@@ -251,7 +251,7 @@ export default function Chatbot() {
                   <i className="fas fa-calendar"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">"Lên lịch đăng bài tuần tới"</div>
+                  <div className="activity-title">&ldquo;Lên lịch đăng bài tuần tới&rdquo;</div>
                   <div className="activity-time">Tự động hóa</div>
                 </div>
               </li>
@@ -260,7 +260,7 @@ export default function Chatbot() {
                   <i className="fas fa-users"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">"Tối ưu hóa target audience"</div>
+                  <div className="activity-title">&ldquo;Tối ưu hóa target audience&rdquo;</div>
                   <div className="activity-time">Chiến lược</div>
                 </div>
               </li>

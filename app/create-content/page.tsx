@@ -170,7 +170,7 @@ export default function CreateContent() {
                   <i className="fas fa-edit"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">Tạo bài viết "Khuyến mãi cuối tuần"</div>
+                  <div className="activity-title">Tạo bài viết &ldquo;Khuyến mãi cuối tuần&rdquo;</div>
                   <div className="activity-time">2 giờ trước</div>
                 </div>
               </li>
@@ -179,7 +179,7 @@ export default function CreateContent() {
                   <i className="fas fa-play-circle"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">Tạo Story "Tips chăm sóc da"</div>
+                  <div className="activity-title">Tạo Story &ldquo;Tips chăm sóc da&rdquo;</div>
                   <div className="activity-time">4 giờ trước</div>
                 </div>
               </li>
@@ -188,7 +188,7 @@ export default function CreateContent() {
                   <i className="fas fa-images"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">Tạo Carousel "Sản phẩm mới"</div>
+                  <div className="activity-title">Tạo Carousel &ldquo;Sản phẩm mới&rdquo;</div>
                   <div className="activity-time">1 ngày trước</div>
                 </div>
               </li>
@@ -197,7 +197,7 @@ export default function CreateContent() {
                   <i className="fas fa-video"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">Tạo Video "Hướng dẫn sử dụng"</div>
+                  <div className="activity-title">Tạo Video &ldquo;Hướng dẫn sử dụng&rdquo;</div>
                   <div className="activity-time">2 ngày trước</div>
                 </div>
               </li>

@@ -221,7 +221,7 @@ export default function Schedule() {
                   <i className="fas fa-calendar-check"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">Đăng bài "Khuyến mãi cuối tuần"</div>
+                  <div className="activity-title">Đăng bài &ldquo;Khuyến mãi cuối tuần&rdquo;</div>
                   <div className="activity-time">2 giờ trước</div>
                 </div>
               </li>
@@ -248,7 +248,7 @@ export default function Schedule() {
                   <i className="fas fa-share"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">Đăng bài "Tips chăm sóc da"</div>
+                  <div className="activity-title">Đăng bài &ldquo;Tips chăm sóc da&rdquo;</div>
                   <div className="activity-time">2 ngày trước</div>
                 </div>
               </li>

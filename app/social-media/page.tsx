@@ -15,7 +15,6 @@ interface SocialAccount {
 
 export default function SocialMedia() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [selectedPlatform, setSelectedPlatform] = useState('all');
 
   const toggleMobileMenu = () => {
     setIsMobileOpen(!isMobileOpen);
