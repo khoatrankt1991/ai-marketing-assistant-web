@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import Sidebar from './components/Sidebar';
-import BottomMenu from './components/BottomMenu';
+import Sidebar from '../components/Sidebar';
+import BottomMenu from '../components/BottomMenu';
 
-export default function Home() {
+export default function CreateContent() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState('post');
   const [selectedPlatforms, setSelectedPlatforms] = useState(['facebook', 'instagram']);
 
   const toggleMobileMenu = () => {
@@ -21,17 +21,14 @@ export default function Home() {
     );
   };
 
-  const handleGenerateContent = () => {
-    setIsGenerating(true);
-    setTimeout(() => {
-      setIsGenerating(false);
-      alert('Đã tạo thành công bài viết! (Demo)');
-    }, 2000);
-  };
-
-  const handleQuickAction = (action: string) => {
-    alert(`Chuyển đến: ${action} (Demo)`);
-  };
+  const templates = [
+    { id: 'post', name: 'Bài viết thường', icon: 'fas fa-file-alt' },
+    { id: 'story', name: 'Story/Reel', icon: 'fas fa-play-circle' },
+    { id: 'carousel', name: 'Carousel', icon: 'fas fa-images' },
+    { id: 'video', name: 'Video', icon: 'fas fa-video' },
+    { id: 'poll', name: 'Khảo sát', icon: 'fas fa-poll' },
+    { id: 'event', name: 'Sự kiện', icon: 'fas fa-calendar-plus' },
+  ];
 
   return (
     <div className="container">
@@ -39,9 +36,9 @@ export default function Home() {
 
       <main className="main-content">
         <div className="top-bar">
-          <div className="welcome-text">
-            <h2>Chào mừng trở lại!</h2>
-            <p>Hãy cùng tạo nên những chiến dịch marketing tuyệt vời</p>
+          <div className="page-title">
+            <h2>Tạo nội dung</h2>
+            <p>Tạo nội dung marketing chất lượng với AI</p>
           </div>
           <div className="user-profile">
             <div className="user-avatar">A</div>
@@ -54,57 +51,39 @@ export default function Home() {
 
         <div className="dashboard-grid">
           <div className="card">
-            <h3><i className="fas fa-rocket"></i>Hành động nhanh</h3>
+            <h3><i className="fas fa-magic"></i>Chọn mẫu nội dung</h3>
             <div className="quick-actions">
-              <button 
-                className="action-btn"
-                onClick={() => handleQuickAction('Tạo bài viết AI')}
-              >
-                <i className="fas fa-magic"></i>
-                Tạo bài viết AI
-              </button>
-              <button 
-                className="action-btn"
-                onClick={() => handleQuickAction('Lên lịch đăng')}
-              >
-                <i className="fas fa-clock"></i>
-                Lên lịch đăng
-              </button>
-              <button 
-                className="action-btn"
-                onClick={() => handleQuickAction('Cài đặt Chatbot')}
-              >
-                <i className="fas fa-robot"></i>
-                Cài đặt Chatbot
-              </button>
-              <button 
-                className="action-btn"
-                onClick={() => handleQuickAction('Kết nối tài khoản')}
-              >
-                <i className="fas fa-link"></i>
-                Kết nối tài khoản
-              </button>
+              {templates.map((template) => (
+                <button 
+                  key={template.id}
+                  className={`action-btn ${selectedTemplate === template.id ? 'active' : ''}`}
+                  onClick={() => setSelectedTemplate(template.id)}
+                >
+                  <i className={template.icon}></i>
+                  {template.name}
+                </button>
+              ))}
             </div>
           </div>
 
           <div className="card">
-            <h3><i className="fas fa-chart-bar"></i>Thống kê nhanh</h3>
+            <h3><i className="fas fa-chart-line"></i>Thống kê nội dung</h3>
             <div className="stats-grid">
+              <div className="stat-item">
+                <div className="stat-number">156</div>
+                <div className="stat-label">Bài viết đã tạo</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-number">89%</div>
+                <div className="stat-label">Tỷ lệ tương tác</div>
+              </div>
               <div className="stat-item">
                 <div className="stat-number">24</div>
                 <div className="stat-label">Bài viết tháng này</div>
               </div>
               <div className="stat-item">
-                <div className="stat-number">156</div>
-                <div className="stat-label">Tương tác</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">3</div>
-                <div className="stat-label">Nền tảng kết nối</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">89%</div>
-                <div className="stat-label">Chatbot hiệu quả</div>
+                <div className="stat-number">5</div>
+                <div className="stat-label">Mẫu đã lưu</div>
               </div>
             </div>
           </div>
@@ -118,6 +97,18 @@ export default function Home() {
                 type="text" 
                 placeholder="VD: Khuyến mãi mùa hè, sản phẩm mới, tips làm đẹp..."
               />
+            </div>
+            
+            <div className="input-group">
+              <label>Loại nội dung</label>
+              <select>
+                <option>Bài viết thường</option>
+                <option>Story/Reel</option>
+                <option>Carousel</option>
+                <option>Video</option>
+                <option>Khảo sát</option>
+                <option>Sự kiện</option>
+              </select>
             </div>
             
             <div className="input-group">
@@ -165,52 +156,48 @@ export default function Home() {
               </div>
             </div>
             
-            <button 
-              className="generate-btn"
-              onClick={handleGenerateContent}
-              disabled={isGenerating}
-            >
-              <i className={isGenerating ? 'fas fa-spinner fa-spin' : 'fas fa-magic'}></i>
-              {isGenerating ? 'Đang tạo nội dung...' : 'Tạo bài viết với AI'}
+            <button className="generate-btn">
+              <i className="fas fa-magic"></i>
+              Tạo nội dung với AI
             </button>
           </div>
 
           <div className="card recent-activity">
-            <h3><i className="fas fa-history"></i>Hoạt động gần đây</h3>
+            <h3><i className="fas fa-history"></i>Nội dung gần đây</h3>
             <ul className="activity-list">
-              <li className="activity-item">
-                <div className="activity-icon">
-                  <i className="fas fa-share"></i>
-                </div>
-                <div className="activity-content">
-                  <div className="activity-title">Đăng bài "Khuyến mãi cuối tuần" lên Facebook</div>
-                  <div className="activity-time">2 giờ trước</div>
-                </div>
-              </li>
-              <li className="activity-item">
-                <div className="activity-icon">
-                  <i className="fas fa-robot"></i>
-                </div>
-                <div className="activity-content">
-                  <div className="activity-title">Chatbot trả lời 15 câu hỏi khách hàng</div>
-                  <div className="activity-time">4 giờ trước</div>
-                </div>
-              </li>
               <li className="activity-item">
                 <div className="activity-icon">
                   <i className="fas fa-edit"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">Tạo bài viết "Tips chăm sóc da mùa khô"</div>
+                  <div className="activity-title">Tạo bài viết "Khuyến mãi cuối tuần"</div>
+                  <div className="activity-time">2 giờ trước</div>
+                </div>
+              </li>
+              <li className="activity-item">
+                <div className="activity-icon">
+                  <i className="fas fa-play-circle"></i>
+                </div>
+                <div className="activity-content">
+                  <div className="activity-title">Tạo Story "Tips chăm sóc da"</div>
+                  <div className="activity-time">4 giờ trước</div>
+                </div>
+              </li>
+              <li className="activity-item">
+                <div className="activity-icon">
+                  <i className="fas fa-images"></i>
+                </div>
+                <div className="activity-content">
+                  <div className="activity-title">Tạo Carousel "Sản phẩm mới"</div>
                   <div className="activity-time">1 ngày trước</div>
                 </div>
               </li>
               <li className="activity-item">
                 <div className="activity-icon">
-                  <i className="fas fa-calendar"></i>
+                  <i className="fas fa-video"></i>
                 </div>
                 <div className="activity-content">
-                  <div className="activity-title">Lên lịch 5 bài viết cho tuần tới</div>
+                  <div className="activity-title">Tạo Video "Hướng dẫn sử dụng"</div>
                   <div className="activity-time">2 ngày trước</div>
                 </div>
               </li>
@@ -222,4 +209,4 @@ export default function Home() {
       <BottomMenu />
     </div>
   );
-}
+} 
